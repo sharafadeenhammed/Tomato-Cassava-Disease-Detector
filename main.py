@@ -17,6 +17,26 @@
 # Class [13]: Tomato__Tomato_mosaic_virus
 # Class [14]: Tomato_healthy
 
+
+
+# --- DETECTED CLASSES ---
+# Class [0]: Cassava_Bacterial_Blight
+# Class [1]: Cassava_Brown_Streak_Disease
+# Class [2]: Cassava_Green_Mottle
+# Class [3]: Cassava_Healthy
+# Class [4]: Cassava_Mosaic_Disease
+# Class [5]: Tomato_Tomato___Bacterial_spot
+# Class [6]: Tomato_Tomato___Early_blight
+# Class [7]: Tomato_Tomato___Late_blight
+# Class [8]: Tomato_Tomato___Leaf_Mold
+# Class [9]: Tomato_Tomato___Septoria_leaf_spot
+# Class [10]: Tomato_Tomato___Spider_mites_Two-spotted_spider_mite
+# Class [11]: Tomato_Tomato___Target_Spot
+# Class [12]: Tomato_Tomato___Tomato_Yellow_Leaf_Curl_Virus
+# Class [13]: Tomato_Tomato___Tomato_mosaic_virus
+# Class [14]: Tomato_Tomato___healthy
+# ------------------------
+
 import io
 import cv2
 import numpy as np
@@ -28,7 +48,7 @@ app = FastAPI(title="Crop Disease Detection API")
 # CONFIDENCE_THRESHOLD = 0.70  # Require at least 70% confidence
 CONFIDENCE_THRESHOLD = 0.55  # Require at least 70% confidence
 MIN_GREEN_RATIO = 0.10       # Require at least 10% green/plant pixels in the image
-
+# MODEL_NAME = 'mobilenetv3_large_100' # model name.
 # 1. Load the ONNX model
 session = ort.InferenceSession("crop_disease_mobilenet.onnx")
 input_name = session.get_inputs()[0].name
@@ -136,7 +156,7 @@ async def predict(file: UploadFile = File(...)):
     # 3. Second Guardrail: Enforce Confidence Floor
     print("confidence: ", confidence)
     if confidence < CONFIDENCE_THRESHOLD:
-        print(f"Low Confidence: {confidence*100:.2f}% on class {CLASS_NAMES[predicted_idx]}")
+        print(f"Low Confidence: {confidence*100.0:.2f}% on class {CLASS_NAMES[predicted_idx]}")
         return {
             "status": "low_confidence",
             "class_id": -1,
