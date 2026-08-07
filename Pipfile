@@ -5,9 +5,14 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
-uvicorn = "*"
 pillow = "*"
 python-multipart = "*"
+onnx = "*"
+onnxruntime = "*"
+numpy = "*"
+timm = "*"
+opencv-python-headless = "*"
+uvicorn = {extras = ["standard"], version = "*"}
 
 [dev-packages]
 
